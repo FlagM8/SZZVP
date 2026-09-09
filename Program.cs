@@ -8,7 +8,7 @@ internal static class Program
 {
     private static void Main()
     {
-
+/*
         User reporter = new User(
             "Jan",
             UserRole.Reporter
@@ -40,6 +40,62 @@ internal static class Program
 
 
         l1.Handle(incident);
+        Console.WriteLine($"-----------------------");
+        IncidentType type = IncidentType.Security;
+
+        IncidentCreator creator = IncidentCreator.GetCreator(type);
+
+        Incident incident1 = creator.CreateIncident(
+            1,
+            IncidentPriority.Critical,
+            "Unauthorized access detected"
+        );
+
+        Console.WriteLine(incident1);
+        Console.WriteLine(incident1.GetType().Name);
+*/
+        HelpdeskConfig config = new HelpdeskConfig
+        {
+            ExitWhenAllResolved = true,
+        };
+
+        Helpdesk helpdesk = new Helpdesk(config);
+
+        User jan = new User(
+            "Jan",
+            UserRole.Reporter
+        );
+
+        User peter = new User(
+            "Peter",
+            UserRole.Reporter
+        );
+
+        helpdesk.CreateIncident(
+            IncidentType.Hardware,
+            IncidentPriority.Low,
+            "Keyboard does not work",
+            jan
+        );
+
+        helpdesk.CreateIncident(
+            IncidentType.Network,
+            IncidentPriority.High,
+            "Network connection unavailable",
+            peter
+        );
+
+        helpdesk.CreateIncident(
+            IncidentType.Security,
+            IncidentPriority.Critical,
+            "Unauthorized login detected",
+            jan
+        );
+
+        helpdesk.Run();
+
+
+
     }
 }
 

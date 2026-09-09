@@ -52,6 +52,11 @@ public abstract class Incident
         }
     }
 
+    public override string ToString()
+    {
+        return $"Incident #{Id} - Typ: {Type}, Priorita: {Priority}, Popis: {Description}, Status: {Status}";
+    }
+
 }
 
 
@@ -87,6 +92,14 @@ public class SecurityIncident : Incident
     }
 }
 
+
+public class OtherIncident : Incident
+{
+    public OtherIncident(int id, IncidentPriority priority, string description)
+        : base(id, IncidentType.Other, priority, description)
+    {
+    }
+}
 
 
 public abstract class IncidentResolver
@@ -190,6 +203,109 @@ public class SecurityResolver : IncidentResolver
     {
         Console.WriteLine(
             $"Analáza opravy security pro incident #{incident.Id}..."
+        );
+    }
+}
+
+
+
+
+
+
+public abstract class IncidentCreator
+{
+    public abstract Incident CreateIncident(
+        int id,
+        IncidentPriority priority,
+        string description
+    );
+
+public static IncidentCreator GetCreator(IncidentType type)
+{
+    return type switch
+    {
+        IncidentType.Hardware => new HardwareIncidentCreator(),
+        IncidentType.Software => new SoftwareIncidentCreator(),
+        IncidentType.Network => new NetworkIncidentCreator(),
+        IncidentType.Security => new SecurityIncidentCreator(),
+        IncidentType.Other => new OtherIncidentCreator(),
+        _ => throw new ArgumentException("Neznamý typ incidentů")
+    };
+}
+
+}
+
+public class HardwareIncidentCreator : IncidentCreator
+{
+    public override Incident CreateIncident(
+        int id,
+        IncidentPriority priority,
+        string description)
+    {
+        return new HardwareIncident(
+            id,
+            priority,
+            description
+        );
+    }
+}
+
+public class SoftwareIncidentCreator : IncidentCreator
+{
+    public override Incident CreateIncident(
+        int id,
+        IncidentPriority priority,
+        string description)
+    {
+        return new SoftwareIncident(
+            id,
+            priority,
+            description
+        );
+    }
+}
+
+public class NetworkIncidentCreator : IncidentCreator
+{
+    public override Incident CreateIncident(
+        int id,
+        IncidentPriority priority,
+        string description)
+    {
+        return new NetworkIncident(
+            id,
+            priority,
+            description
+        );
+    }
+}
+
+public class SecurityIncidentCreator : IncidentCreator
+{
+    public override Incident CreateIncident(
+        int id,
+        IncidentPriority priority,
+        string description)
+    {
+        return new SecurityIncident(
+            id,
+            priority,
+            description
+        );
+    }
+}
+
+public class OtherIncidentCreator : IncidentCreator
+{
+    public override Incident CreateIncident(
+        int id,
+        IncidentPriority priority,
+        string description)
+    {
+        return new OtherIncident(
+            id,
+            priority,
+            description
         );
     }
 }
