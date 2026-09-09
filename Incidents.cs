@@ -75,6 +75,8 @@ public class HardwareIncident : Incident
     public HardwareIncident(int id, IncidentPriority priority, string description)
         : base(id, IncidentType.Hardware, priority, description)
     {
+        RequiredRepairLevel = SupportLevel.L2;
+        RequiredTestLevel = SupportLevel.L1;
     }
 }
 
@@ -83,6 +85,8 @@ public class SoftwareIncident : Incident
     public SoftwareIncident(int id, IncidentPriority priority, string description)
         : base(id, IncidentType.Software, priority, description)
     {
+        RequiredRepairLevel = SupportLevel.L2;
+        RequiredTestLevel = SupportLevel.L2;
     }
 }
 
@@ -91,6 +95,8 @@ public class NetworkIncident : Incident
     public NetworkIncident(int id, IncidentPriority priority, string description)
         : base(id, IncidentType.Network, priority, description)
     {
+        RequiredRepairLevel = SupportLevel.L2;
+        RequiredTestLevel = SupportLevel.L2;
     }
 }
 
@@ -99,6 +105,8 @@ public class SecurityIncident : Incident
     public SecurityIncident(int id, IncidentPriority priority, string description)
         : base(id, IncidentType.Security, priority, description)
     {
+        RequiredRepairLevel = SupportLevel.L3;
+        RequiredTestLevel = SupportLevel.L3;    
     }
 }
 
@@ -108,6 +116,8 @@ public class OtherIncident : Incident
     public OtherIncident(int id, IncidentPriority priority, string description)
         : base(id, IncidentType.Other, priority, description)
     {
+        RequiredRepairLevel = SupportLevel.L2;
+        RequiredTestLevel = SupportLevel.L1;
     }
 }
 
@@ -239,14 +249,14 @@ public class OtherResolver : IncidentResolver
     protected override void Analyze(Incident incident)
     {
         Console.WriteLine(
-            $"Analýza other incidentu #{incident.Id}..."
+            $"Analýza nezařazeného incidentu #{incident.Id}..."
         );
     }
 
     protected override bool Fix(Incident incident, SupportLevel level)
     {
         Console.WriteLine(
-            $"Analýza opravy other pro incident #{incident.Id}..."
+            $"Analýza opravy nezařazeného incidentu #{incident.Id}..."
         );
         return level >= incident.RequiredRepairLevel;
     }

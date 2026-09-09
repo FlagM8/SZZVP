@@ -28,7 +28,7 @@ dotnet run
 
 ## Použití
 
-Po spuštění se vytvoří dva uživatelé a tři ukázkové incidenty.
+Po spuštění se vytvoří dva uživatelé, administrátor a tři ukázkové incidenty. Administrátor dostává oznámení o každé změně stavu všech incidentů vytvořených helpdeskem.
 
 Aplikace v každé iteraci vypíše seznam incidentů, jejich typy, priority, stavy a počet otevřených incidentů. Potom zpracuje jeden incident. V konzoli je vidět, která úroveň podpory ho řeší, případné předání dál a oznámení uživateli.
 

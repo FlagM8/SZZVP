@@ -10,6 +10,7 @@ public class HelpdeskConfig
 public class Helpdesk
 {
     private readonly List<Incident> incidents = new(); //místo nějaké db
+    private readonly User administrator = new User("Administrátor", UserRole.Administrator);
 
     private readonly HelpdeskConfig config;
 
@@ -55,6 +56,7 @@ public class Helpdesk
         );
 
         incident.AddObserver(reporter);
+        incident.AddObserver(administrator);
 
         incidents.Add(incident);
 
@@ -88,6 +90,7 @@ public class Helpdesk
                 !i.RequiresExternalSupport &&
                 (i.Status == IncidentStatus.New ||
                  i.Status == IncidentStatus.Escalated))
+            .OrderByDescending(i => i.Priority) //Dle prirotity
             .Take(1) //zpracovávání jde po jednom, možno přidat do configu
             .ToList();
 
