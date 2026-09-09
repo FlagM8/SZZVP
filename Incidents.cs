@@ -151,7 +151,7 @@ public class HardwareResolver : IncidentResolver
     protected override void Fix(Incident incident)
     {
         Console.WriteLine(
-            $"Analáza opravy hardware pro incident #{incident.Id}..."
+            $"Analýza opravy hardware pro incident #{incident.Id}..."
         );
     }
 }
@@ -161,7 +161,7 @@ public class SoftwareResolver : IncidentResolver
     protected override void Analyze(Incident incident)
     {
         Console.WriteLine(
-            $"Analáza software incidentu #{incident.Id}..."
+            $"Analýza software incidentu #{incident.Id}..."
         );
     }
 
@@ -195,19 +195,34 @@ public class SecurityResolver : IncidentResolver
     protected override void Analyze(Incident incident)
     {
         Console.WriteLine(
-            $"Analáza security incidentu #{incident.Id}..."
+            $"Analýza security incidentu #{incident.Id}..."
         );
     }
 
     protected override void Fix(Incident incident)
     {
         Console.WriteLine(
-            $"Analáza opravy security pro incident #{incident.Id}..."
+            $"Analýza opravy security pro incident #{incident.Id}..."
         );
     }
 }
 
+public class OtherResolver : IncidentResolver
+{
+    protected override void Analyze(Incident incident)
+    {
+        Console.WriteLine(
+            $"Analýza other incidentu #{incident.Id}..."
+        );
+    }
 
+    protected override void Fix(Incident incident)
+    {
+        Console.WriteLine(
+            $"Analýza opravy other pro incident #{incident.Id}..."
+        );
+    }
+}
 
 
 

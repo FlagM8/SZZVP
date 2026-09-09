@@ -36,7 +36,8 @@ protected IncidentResolver GetResolver(Incident incident)
         IncidentType.Software => new SoftwareResolver(),
         IncidentType.Network => new NetworkResolver(),
         IncidentType.Security => new SecurityResolver(),
-        _ => throw new ArgumentException("NOPE")
+        IncidentType.Other => new OtherResolver(),
+        _ => throw new ArgumentException("Nenalezený typ incidentu")
     };
 }
 
@@ -49,7 +50,9 @@ class L1Handler : SupportHandler
         Console.WriteLine(
                 $"Incident #{incident.Id} řešen L1"
             );
-        if (incident.Priority <= IncidentPriority.Medium)
+        // Bezpečnostní incidenty patří specialistovi L3.
+        if (incident.Type != IncidentType.Security &&
+            incident.Priority <= IncidentPriority.Medium)
         {
             //incident.ChangeStatus(IncidentStatus.InProgress);
             Console.WriteLine(
@@ -76,7 +79,8 @@ class L2Handler : SupportHandler
         Console.WriteLine(
                 $"Incident #{incident.Id} řešen L2"
             );
-        if (incident.Priority <= IncidentPriority.High)
+        if (incident.Type != IncidentType.Security &&
+            incident.Priority <= IncidentPriority.High)
         {
             //incident.ChangeStatus(IncidentStatus.InProgress);
             Console.WriteLine(
