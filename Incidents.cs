@@ -25,6 +25,11 @@ public abstract class Incident
 
     public void ChangeStatus(IncidentStatus newStatus)
     {
+        if (Status == newStatus)
+        {
+            //Console.WriteLine($"------Incident #{Id} již má status {newStatus}");
+            return;
+        }
         Status = newStatus;
         NotifyObservers();
         //LastUpdatedBy = user;

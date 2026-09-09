@@ -19,7 +19,7 @@ public class User: IIncidentObserver
 
     public void Update(Incident incident)
     {
-        Console.WriteLine($"Status incidentu {incident.Id} zmenen na {incident.Status}");
+        Console.WriteLine($"[NOTIFIKACE] pro uživatele {Username}: Status incidentu {incident.Id} zmenen na {incident.Status}");
     }
 
 }
