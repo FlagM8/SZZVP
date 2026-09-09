@@ -23,10 +23,29 @@ public abstract class Incident
         Status = IncidentStatus.New;
     }
 
-    public void ChangeStatus(IncidentStatus newStatus, User user)
+    public void ChangeStatus(IncidentStatus newStatus)
     {
         Status = newStatus;
+        NotifyObservers();
         //LastUpdatedBy = user;
+    }
+    public void AddObserver(IIncidentObserver observer)
+    {
+        observers.Add(observer);
+    }
+
+    public void RemoveObserver(IIncidentObserver observer)
+    {
+        observers.Remove(observer);
+    }
+
+    private void NotifyObservers()
+    {
+        foreach (var observer in observers)
+        {
+            observer.Update(this);
+        }
+    }
 
 }
 

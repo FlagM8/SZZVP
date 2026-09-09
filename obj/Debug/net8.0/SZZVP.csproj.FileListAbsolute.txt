@@ -12,3 +12,4 @@
 /Users/jcmuchar/Documents/SZZVP/SZZVP/obj/Debug/net8.0/SZZVP.pdb
 /Users/jcmuchar/Documents/SZZVP/SZZVP/obj/Debug/net8.0/SZZVP.genruntimeconfig.cache
 /Users/jcmuchar/Documents/SZZVP/SZZVP/obj/Debug/net8.0/ref/SZZVP.dll
+/Users/jcmuchar/Documents/SZZVP/SZZVP/obj/Debug/net8.0/SZZVP.sourcelink.json
