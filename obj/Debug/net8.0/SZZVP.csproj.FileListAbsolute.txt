@@ -1,0 +1,14 @@
+/Users/jcmuchar/Documents/SZZVP/SZZVP/bin/Debug/net8.0/SZZVP
+/Users/jcmuchar/Documents/SZZVP/SZZVP/bin/Debug/net8.0/SZZVP.deps.json
+/Users/jcmuchar/Documents/SZZVP/SZZVP/bin/Debug/net8.0/SZZVP.runtimeconfig.json
+/Users/jcmuchar/Documents/SZZVP/SZZVP/bin/Debug/net8.0/SZZVP.dll
+/Users/jcmuchar/Documents/SZZVP/SZZVP/bin/Debug/net8.0/SZZVP.pdb
+/Users/jcmuchar/Documents/SZZVP/SZZVP/obj/Debug/net8.0/SZZVP.GeneratedMSBuildEditorConfig.editorconfig
+/Users/jcmuchar/Documents/SZZVP/SZZVP/obj/Debug/net8.0/SZZVP.AssemblyInfoInputs.cache
+/Users/jcmuchar/Documents/SZZVP/SZZVP/obj/Debug/net8.0/SZZVP.AssemblyInfo.cs
+/Users/jcmuchar/Documents/SZZVP/SZZVP/obj/Debug/net8.0/SZZVP.csproj.CoreCompileInputs.cache
+/Users/jcmuchar/Documents/SZZVP/SZZVP/obj/Debug/net8.0/SZZVP.dll
+/Users/jcmuchar/Documents/SZZVP/SZZVP/obj/Debug/net8.0/refint/SZZVP.dll
+/Users/jcmuchar/Documents/SZZVP/SZZVP/obj/Debug/net8.0/SZZVP.pdb
+/Users/jcmuchar/Documents/SZZVP/SZZVP/obj/Debug/net8.0/SZZVP.genruntimeconfig.cache
+/Users/jcmuchar/Documents/SZZVP/SZZVP/obj/Debug/net8.0/ref/SZZVP.dll
