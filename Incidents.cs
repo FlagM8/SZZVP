@@ -86,3 +86,110 @@ public class SecurityIncident : Incident
     {
     }
 }
+
+
+
+public abstract class IncidentResolver
+{
+    public void Resolve(Incident incident)
+    {
+        Accept(incident);
+        Analyze(incident);
+        Fix(incident);
+        Test(incident);
+        Close(incident);
+    }
+
+    protected virtual void Accept(Incident incident)
+    {
+        Console.WriteLine($"Incident #{incident.Id} přijat.");
+        incident.ChangeStatus(IncidentStatus.InProgress);
+    }
+
+    protected abstract void Analyze(Incident incident);
+
+    protected abstract void Fix(Incident incident);
+
+    protected virtual void Test(Incident incident)
+    {
+        Console.WriteLine($"Test řešení incidentu #{incident.Id}...");
+    }
+
+    protected virtual void Close(Incident incident)
+    {
+        Console.WriteLine($"Incident #{incident.Id} vyřešen.");
+        incident.ChangeStatus(IncidentStatus.Resolved);
+    }
+
+
+
+}
+
+
+public class HardwareResolver : IncidentResolver
+{
+    protected override void Analyze(Incident incident)
+    {
+        Console.WriteLine(
+            $"Analáza hardware incidentu #{incident.Id}..."
+        );
+    }
+
+    protected override void Fix(Incident incident)
+    {
+        Console.WriteLine(
+            $"Analáza opravy hardware pro incident #{incident.Id}..."
+        );
+    }
+}
+
+public class SoftwareResolver : IncidentResolver
+{
+    protected override void Analyze(Incident incident)
+    {
+        Console.WriteLine(
+            $"Analáza software incidentu #{incident.Id}..."
+        );
+    }
+
+    protected override void Fix(Incident incident)
+    {
+        Console.WriteLine(
+            $"Analáza opravy software pro incident #{incident.Id}..."
+        );
+    }
+}
+
+public class NetworkResolver : IncidentResolver
+{
+    protected override void Analyze(Incident incident)
+    {
+        Console.WriteLine(
+            $"Analáza network incidentu #{incident.Id}..."
+        );
+    }
+
+    protected override void Fix(Incident incident)
+    {
+        Console.WriteLine(
+            $"Analáza opravy network pro incident #{incident.Id}..."
+        );
+    }
+}
+
+public class SecurityResolver : IncidentResolver
+{
+    protected override void Analyze(Incident incident)
+    {
+        Console.WriteLine(
+            $"Analáza security incidentu #{incident.Id}..."
+        );
+    }
+
+    protected override void Fix(Incident incident)
+    {
+        Console.WriteLine(
+            $"Analáza opravy security pro incident #{incident.Id}..."
+        );
+    }
+}

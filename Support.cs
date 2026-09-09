@@ -26,6 +26,20 @@ public abstract class SupportHandler
             );
         }
     }
+
+//Test pro resolver
+protected IncidentResolver GetResolver(Incident incident)
+{
+    return incident.Type switch
+    {
+        IncidentType.Hardware => new HardwareResolver(),
+        IncidentType.Software => new SoftwareResolver(),
+        IncidentType.Network => new NetworkResolver(),
+        IncidentType.Security => new SecurityResolver(),
+        _ => throw new ArgumentException("NOPE")
+    };
+}
+
 }
 
 class L1Handler : SupportHandler
@@ -37,10 +51,12 @@ class L1Handler : SupportHandler
             );
         if (incident.Priority <= IncidentPriority.Medium)
         {
-            incident.ChangeStatus(IncidentStatus.InProgress);
+            //incident.ChangeStatus(IncidentStatus.InProgress);
             Console.WriteLine(
                 $"Incident #{incident.Id} akceptován L1."
             );
+            IncidentResolver resolver = GetResolver(incident);
+            resolver.Resolve(incident);
         }
         else
         {
@@ -62,10 +78,12 @@ class L2Handler : SupportHandler
             );
         if (incident.Priority <= IncidentPriority.High)
         {
-            incident.ChangeStatus(IncidentStatus.InProgress);
+            //incident.ChangeStatus(IncidentStatus.InProgress);
             Console.WriteLine(
                 $"Incident #{incident.Id} akceptován L2."
             );
+            IncidentResolver resolver = GetResolver(incident);
+            resolver.Resolve(incident);
         }
         else
         {
@@ -87,10 +105,12 @@ class L3Handler : SupportHandler
             );
         if (incident.Priority <= IncidentPriority.High)
         {
-            incident.ChangeStatus(IncidentStatus.InProgress);
+            //incident.ChangeStatus(IncidentStatus.InProgress);
             Console.WriteLine(
                 $"Incident #{incident.Id} akceptován L3."
             );
+            IncidentResolver resolver = GetResolver(incident);
+            resolver.Resolve(incident);
         }
         else
         {
@@ -110,6 +130,8 @@ public class AdminHandler : SupportHandler
             $"Administrator přijat incident #{incident.Id}."
         );
 
-        incident.ChangeStatus(IncidentStatus.InProgress);
+        //incident.ChangeStatus(IncidentStatus.InProgress);
+            IncidentResolver resolver = GetResolver(incident);
+            resolver.Resolve(incident);
     }
 }
