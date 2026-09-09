@@ -53,10 +53,9 @@ public abstract class Incident
     {
         observers.Remove(observer);
     }
-
     private void NotifyObservers()
     {
-        foreach (var observer in observers)
+        foreach (User observer in observers)
         {
             observer.Update(this);
         }

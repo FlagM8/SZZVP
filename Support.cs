@@ -11,7 +11,7 @@ public abstract class SupportHandler
 
     public abstract void Handle(Incident incident);
 
-    public void EscalateToSomeoneNotStupid(Incident incident)
+    public void Escalate(Incident incident)
     {
         incident.ChangeStatus(IncidentStatus.Escalated);
 
@@ -61,7 +61,7 @@ class L1Handler : SupportHandler
             IncidentResolver resolver = GetResolver(incident);
             if (!resolver.Resolve(incident, SupportLevel.L1))
             {
-                EscalateToSomeoneNotStupid(incident);
+                Escalate(incident);
             }
         }
         else
@@ -69,7 +69,7 @@ class L1Handler : SupportHandler
             Console.WriteLine(
                 $"Incident #{incident.Id} eskalován dál."
             );
-            EscalateToSomeoneNotStupid(incident);
+            Escalate(incident);
         }
     }
 }
@@ -92,7 +92,7 @@ class L2Handler : SupportHandler
             IncidentResolver resolver = GetResolver(incident);
             if (!resolver.Resolve(incident, SupportLevel.L2))
             {
-                EscalateToSomeoneNotStupid(incident);
+                Escalate(incident);
             }
         }
         else
@@ -100,7 +100,7 @@ class L2Handler : SupportHandler
             Console.WriteLine(
                 $"Incident #{incident.Id} eskalován dál."
             );
-            EscalateToSomeoneNotStupid(incident);
+            Escalate(incident);
         }
     }
 }
@@ -122,7 +122,7 @@ class L3Handler : SupportHandler
             IncidentResolver resolver = GetResolver(incident);
             if (!resolver.Resolve(incident, SupportLevel.L3))
             {
-                EscalateToSomeoneNotStupid(incident);
+                Escalate(incident);
             }
         }
         else
@@ -130,7 +130,7 @@ class L3Handler : SupportHandler
             Console.WriteLine(
                 $"Incident #{incident.Id} eskalován dál."
             );
-            EscalateToSomeoneNotStupid(incident);
+            Escalate(incident);
         }
     }
 }
@@ -147,7 +147,7 @@ public class AdminHandler : SupportHandler
             IncidentResolver resolver = GetResolver(incident);
             if (!resolver.Resolve(incident, SupportLevel.Administrator))
             {
-                EscalateToSomeoneNotStupid(incident);
+                Escalate(incident);
             }
     }
 }

@@ -9,7 +9,7 @@ public class HelpdeskConfig
 
 public class Helpdesk
 {
-    private readonly List<Incident> incidents = new(); //místo nějaké db
+    private readonly List<Incident> incidents = new(); 
     private readonly User administrator = new User("Administrátor", UserRole.Administrator);
 
     private readonly HelpdeskConfig config;
@@ -47,9 +47,9 @@ public class Helpdesk
         string description,
         User reporter)
     {
-        var creator = IncidentCreator.GetCreator(type);
+        IncidentCreator creator = IncidentCreator.GetCreator(type);
 
-        var incident = creator.CreateIncident(
+        Incident incident = creator.CreateIncident(
             nextIncidentId++,
             priority,
             description
@@ -77,7 +77,7 @@ public class Helpdesk
             return;
         }
 
-        foreach (var incident in incidents)
+        foreach (Incident incident in incidents)
         {
             Console.WriteLine(incident);
         }
@@ -85,7 +85,7 @@ public class Helpdesk
 
     public void ProcessIncidents()
     {
-        var incidentsToProcess = incidents
+        List<Incident> incidentsToProcess = incidents
             .Where(i =>
                 !i.RequiresExternalSupport &&
                 (i.Status == IncidentStatus.New ||
@@ -100,7 +100,7 @@ public class Helpdesk
             return;
         }
 
-        foreach (var incident in incidentsToProcess)
+        foreach (Incident incident in incidentsToProcess)
         {
             Console.WriteLine();
             Console.WriteLine($"Processing incident #{incident.Id}...");
