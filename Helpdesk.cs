@@ -85,8 +85,9 @@ public class Helpdesk
     {
         var incidentsToProcess = incidents
             .Where(i =>
-                i.Status == IncidentStatus.New ||
-                i.Status == IncidentStatus.Escalated)
+                !i.RequiresExternalSupport &&
+                (i.Status == IncidentStatus.New ||
+                 i.Status == IncidentStatus.Escalated))
             .Take(1) //zpracovávání jde po jednom, možno přidat do configu
             .ToList();
 
@@ -130,6 +131,13 @@ public void Run()
         ShowIncidents();
 
         ProcessIncidents();
+
+        if (incidents.Any(i => i.RequiresExternalSupport) &&
+            incidents.All(i => i.Status == IncidentStatus.Resolved || i.RequiresExternalSupport))
+        {
+            Console.WriteLine("Automatické zpracování skončilo. Některé incidenty čekají na externí podporu.");
+            break;
+        }
 
         if (config.ExitWhenAllResolved &&
             incidents.Count > 0 &&

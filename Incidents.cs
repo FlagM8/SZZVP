@@ -12,6 +12,16 @@ public abstract class Incident
 
     public IncidentStatus Status { get; private set; }
 
+    public SupportLevel RequiredRepairLevel { get; init; } = SupportLevel.L1;
+    public SupportLevel RequiredTestLevel { get; init; } = SupportLevel.L1;
+    public bool RequiresExternalSupport { get; private set; }
+
+    public void MarkForExternalSupport()
+    {
+        RequiresExternalSupport = true;
+        ChangeStatus(IncidentStatus.Escalated);
+    }
+
     //public User LastUpdatedBy { get; set; }
 
     public Incident(int id, IncidentType type, IncidentPriority priority, string description)
@@ -104,13 +114,25 @@ public class OtherIncident : Incident
 
 public abstract class IncidentResolver
 {
-    public void Resolve(Incident incident)
+    public bool Resolve(Incident incident, SupportLevel level)
     {
+        if (incident.Status == IncidentStatus.Resolved)
+            return true;
+
         Accept(incident);
         Analyze(incident);
-        Fix(incident);
-        Test(incident);
+        if (!Fix(incident, level))
+        {
+            Console.WriteLine($"Oprava incidentu #{incident.Id} na úrovni {level} selhala.");
+            return false;
+        }
+        if (!Test(incident, level))
+        {
+            Console.WriteLine($"Test incidentu #{incident.Id} na úrovni {level} selhal.");
+            return false;
+        }
         Close(incident);
+        return true;
     }
 
     protected virtual void Accept(Incident incident)
@@ -121,11 +143,12 @@ public abstract class IncidentResolver
 
     protected abstract void Analyze(Incident incident);
 
-    protected abstract void Fix(Incident incident);
+    protected abstract bool Fix(Incident incident, SupportLevel level);
 
-    protected virtual void Test(Incident incident)
+    protected virtual bool Test(Incident incident, SupportLevel level)
     {
         Console.WriteLine($"Test řešení incidentu #{incident.Id}...");
+        return level >= incident.RequiredTestLevel;
     }
 
     protected virtual void Close(Incident incident)
@@ -148,11 +171,12 @@ public class HardwareResolver : IncidentResolver
         );
     }
 
-    protected override void Fix(Incident incident)
+    protected override bool Fix(Incident incident, SupportLevel level)
     {
         Console.WriteLine(
             $"Analýza opravy hardware pro incident #{incident.Id}..."
         );
+        return level >= incident.RequiredRepairLevel;
     }
 }
 
@@ -165,11 +189,12 @@ public class SoftwareResolver : IncidentResolver
         );
     }
 
-    protected override void Fix(Incident incident)
+    protected override bool Fix(Incident incident, SupportLevel level)
     {
         Console.WriteLine(
             $"Analáza opravy software pro incident #{incident.Id}..."
         );
+        return level >= incident.RequiredRepairLevel;
     }
 }
 
@@ -182,11 +207,12 @@ public class NetworkResolver : IncidentResolver
         );
     }
 
-    protected override void Fix(Incident incident)
+    protected override bool Fix(Incident incident, SupportLevel level)
     {
         Console.WriteLine(
             $"Analáza opravy network pro incident #{incident.Id}..."
         );
+        return level >= incident.RequiredRepairLevel;
     }
 }
 
@@ -199,11 +225,12 @@ public class SecurityResolver : IncidentResolver
         );
     }
 
-    protected override void Fix(Incident incident)
+    protected override bool Fix(Incident incident, SupportLevel level)
     {
         Console.WriteLine(
             $"Analýza opravy security pro incident #{incident.Id}..."
         );
+        return level >= incident.RequiredRepairLevel;
     }
 }
 
@@ -216,11 +243,12 @@ public class OtherResolver : IncidentResolver
         );
     }
 
-    protected override void Fix(Incident incident)
+    protected override bool Fix(Incident incident, SupportLevel level)
     {
         Console.WriteLine(
             $"Analýza opravy other pro incident #{incident.Id}..."
         );
+        return level >= incident.RequiredRepairLevel;
     }
 }
 

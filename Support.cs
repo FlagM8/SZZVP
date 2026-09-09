@@ -21,8 +21,9 @@ public abstract class SupportHandler
         }
         else
         {
+            incident.MarkForExternalSupport();
             Console.WriteLine(
-                $"Incident #{incident.Id} nemohl být vyřešen"
+                $"Incident #{incident.Id} nemohl být vyřešen; čeká na externí podporu."
             );
         }
     }
@@ -50,7 +51,6 @@ class L1Handler : SupportHandler
         Console.WriteLine(
                 $"Incident #{incident.Id} řešen L1"
             );
-        // Bezpečnostní incidenty patří specialistovi L3.
         if (incident.Type != IncidentType.Security &&
             incident.Priority <= IncidentPriority.Medium)
         {
@@ -59,7 +59,10 @@ class L1Handler : SupportHandler
                 $"Incident #{incident.Id} akceptován L1."
             );
             IncidentResolver resolver = GetResolver(incident);
-            resolver.Resolve(incident);
+            if (!resolver.Resolve(incident, SupportLevel.L1))
+            {
+                EscalateToSomeoneNotStupid(incident);
+            }
         }
         else
         {
@@ -87,7 +90,10 @@ class L2Handler : SupportHandler
                 $"Incident #{incident.Id} akceptován L2."
             );
             IncidentResolver resolver = GetResolver(incident);
-            resolver.Resolve(incident);
+            if (!resolver.Resolve(incident, SupportLevel.L2))
+            {
+                EscalateToSomeoneNotStupid(incident);
+            }
         }
         else
         {
@@ -114,7 +120,10 @@ class L3Handler : SupportHandler
                 $"Incident #{incident.Id} akceptován L3."
             );
             IncidentResolver resolver = GetResolver(incident);
-            resolver.Resolve(incident);
+            if (!resolver.Resolve(incident, SupportLevel.L3))
+            {
+                EscalateToSomeoneNotStupid(incident);
+            }
         }
         else
         {
@@ -136,6 +145,9 @@ public class AdminHandler : SupportHandler
 
         //incident.ChangeStatus(IncidentStatus.InProgress);
             IncidentResolver resolver = GetResolver(incident);
-            resolver.Resolve(incident);
+            if (!resolver.Resolve(incident, SupportLevel.Administrator))
+            {
+                EscalateToSomeoneNotStupid(incident);
+            }
     }
 }

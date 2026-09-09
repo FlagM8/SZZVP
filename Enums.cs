@@ -32,3 +32,11 @@ public enum UserRole
     L3,
     Administrator
 }
+public enum SupportLevel
+{
+    L1,
+    L2,
+    L3,
+    Administrator,
+    External
+}
